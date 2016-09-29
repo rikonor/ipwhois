@@ -9,7 +9,7 @@ type Response struct {
 	Entities       []string          `json:"entities"`
 	Network        Network           `json:"network"`
 	Objects        map[string]Object `json:"objects"`
-	NIR            string            `json:"nir"`
+	NIR            NIR               `json:"nir"`
 	Query          string            `json:"query"`
 	Raw            string            `json:"raw"`
 }
@@ -78,4 +78,33 @@ type Phone struct {
 
 type Email struct {
 	Value string `json:"value"`
+}
+
+type NIR struct {
+	Query    string       `json:"query"`
+	Networks []NIRNetwork `json:"nets"`
+	Raw      string       `json:"raw"`
+}
+
+type NIRNetwork struct {
+	Range       string                `json:"range"`
+	CIDR        string                `json:"cidr"`
+	Handle      string                `json:"handle"`
+	Name        string                `json:"name"`
+	NameServers []string              `json:"nameservers"`
+	Address     string                `json:"address"`
+	PostalCode  string                `json:"postal_code"`
+	Country     string                `json:"country"`
+	Contacts    map[string]NIRContact `json:"contacts"`
+	Created     string                `json:"created"`
+	Updated     string                `json:"updated"`
+}
+
+type NIRContact struct {
+	Phone        string `json:"phone"`
+	Fax          string `json:"fax"`
+	Email        string `json:"email"`
+	Division     string `json:"division"`
+	Organization string `json:"organization"`
+	Updated      string `json:"updated"`
 }

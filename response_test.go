@@ -114,7 +114,42 @@ func TestResponse(t *testing.T) {
   "asn_country_code": "US",
   "asn_date": "",
   "asn_cidr": "8.8.8.0/24",
-  "nir": null,
+  "nir": {
+		 "query":"1.0.16.0",
+		 "nets":[
+				{
+					 "updated":"2012-03-23T03:29:04",
+					 "handle":"",
+					 "name":"i2ts,inc.",
+					 "contacts":{
+							"admin":{
+								 "division":"Engineering Department",
+								 "fax":"03-5287-6276",
+								 "updated":"2012-03-19T02:20:04",
+								 "phone":"03-5287-6250",
+								 "organization":"i2ts, inc.",
+								 "email":"tech-support@i2ts.ne.jp"
+							},
+							"tech":{
+								 "division":"Engineering Department",
+								 "fax":"03-5287-6276",
+								 "updated":"2012-03-19T02:20:04",
+								 "phone":"03-5287-6250",
+								 "organization":"i2ts, inc.",
+								 "email":"tech-support@i2ts.ne.jp"
+							}
+					 },
+					 "nameservers":null,
+					 "country":"JP",
+					 "created":null,
+					 "range":"1.0.16.1 - 1.0.31.255",
+					 "postal_code":null,
+					 "address":null,
+					 "cidr":"1.0.16.0/20"
+				}
+		 ],
+		 "raw":null
+	},
   "query": "8.8.8.8",
   "asn": "15169"
 }
@@ -205,6 +240,37 @@ func TestResponse(t *testing.T) {
 						Action:    "last changed",
 						Timestamp: "2015-11-06T15:45:54-05:00",
 					},
+				},
+			},
+		},
+		NIR: NIR{
+			Query: "1.0.16.0",
+			Networks: []NIRNetwork{
+				NIRNetwork{
+					Range:   "1.0.16.1 - 1.0.31.255",
+					CIDR:    "1.0.16.0/20",
+					Handle:  "",
+					Name:    "i2ts,inc.",
+					Country: "JP",
+					Contacts: map[string]NIRContact{
+						"admin": NIRContact{
+							Phone:        "03-5287-6250",
+							Fax:          "03-5287-6276",
+							Email:        "tech-support@i2ts.ne.jp",
+							Division:     "Engineering Department",
+							Organization: "i2ts, inc.",
+							Updated:      "2012-03-19T02:20:04",
+						},
+						"tech": NIRContact{
+							Phone:        "03-5287-6250",
+							Fax:          "03-5287-6276",
+							Email:        "tech-support@i2ts.ne.jp",
+							Division:     "Engineering Department",
+							Organization: "i2ts, inc.",
+							Updated:      "2012-03-19T02:20:04",
+						},
+					},
+					Updated: "2012-03-23T03:29:04",
 				},
 			},
 		},
