@@ -1,6 +1,7 @@
 package ipwhois
 
 import (
+	"encoding/json"
 	"fmt"
 	"os/exec"
 )
@@ -63,7 +64,19 @@ func init() {
 
 // LookupIP performs an ip whois lookup on the given ip and returns a similar result
 // for all RIRs as specified by the py-ipwhois package
-func LookupIP(ip string) (string, error) {
+func LookupIP(ip string) (*Response, error) {
+	// call python's ipwhois
 	s := fmt.Sprintf(pyWhoisQuery, ip)
-	return execPythonScript(s)
+	strRes, err := execPythonScript(s)
+	if err != nil {
+		return nil, fmt.Errorf("call to py-whois failed: %s", err)
+	}
+
+	// convert string response to struct
+	var res Response
+	if err := json.Unmarshal([]byte(strRes), &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }
