@@ -50,21 +50,27 @@ func checkPythonPackageInstalled(name string) bool {
 	return true
 }
 
+var (
+	// PreqreqsMet means that the prerequisites for running this package have been met
+	// meaning python and py-ipwhois are installed
+	PreqreqsMet = false
+)
+
 func init() {
 	// Check if python is present
-	if !checkPythonInstalled() {
-		panic("importing `ipwhois` requires you have python installed")
-	}
-
-	// Check if ipwhois is present
-	if !checkPythonPackageInstalled("ipwhois") {
-		panic("importing `whois` requires you have the `whois` python package installed")
+	// Check if py-ipwhois is present
+	if checkPythonInstalled() && checkPythonPackageInstalled("ipwhois") {
+		PreqreqsMet = true
 	}
 }
 
 // LookupIP performs an ip whois lookup on the given ip and returns a similar result
 // for all RIRs as specified by the py-ipwhois package
 func LookupIP(ip string) (*Response, error) {
+	if !PreqreqsMet {
+		panic("calling `LookupIP` requires you have `python` and the `ipwhois` python package installed")
+	}
+
 	// call python's ipwhois
 	s := fmt.Sprintf(pyWhoisQuery, ip)
 	strRes, err := execPythonScript(s)
