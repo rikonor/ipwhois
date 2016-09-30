@@ -15,7 +15,9 @@ func TestResponse(t *testing.T) {
   ],
   "asn_registry": "arin",
   "network": {
-    "status": null,
+    "status": [
+			"active"
+		],
     "handle": "NET-8-8-8-0-1",
     "name": "LVLT-GOGL-8-8-8",
     "links": [
@@ -168,6 +170,7 @@ func TestResponse(t *testing.T) {
 		ASNRegistry:    "arin",
 		Entities:       []string{"GOGL"},
 		Network: Network{
+			Status: []string{"active"},
 			Handle: "NET-8-8-8-0-1",
 			Name:   "LVLT-GOGL-8-8-8",
 			Links: []string{

@@ -15,7 +15,7 @@ type Response struct {
 }
 
 type Network struct {
-	Status       string   `json:"status"`
+	Status       []string `json:"status"`
 	Handle       string   `json:"handle"`
 	Name         string   `json:"name"`
 	Links        []string `json:"links"`
