@@ -2,9 +2,12 @@ package ipwhois
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os/exec"
 )
+
+var ErrRateLimit = errors.New("call was rate-limited")
 
 var pyCheckImport = `\
 try:
@@ -17,10 +20,16 @@ var pyWhoisQuery = `\
 import sys
 import json
 from ipwhois import IPWhois
+from ipwhois.exceptions import HTTPRateLimitError
 
 obj = IPWhois("%s")
-results = obj.lookup_rdap(depth=1)
-print json.dumps(results)
+try:
+	results = obj.lookup_rdap(depth=1, retry_count=0)
+	print json.dumps(results)
+except HTTPRateLimitError:
+	print "rate-limit"
+except:
+	raise
 `
 
 // execPythonScript executes a given python script
@@ -76,6 +85,11 @@ func LookupIP(ip string) (*Response, error) {
 	strRes, err := execPythonScript(s)
 	if err != nil {
 		return nil, fmt.Errorf("call to py-whois failed: %s", err)
+	}
+
+	// Check if the python error is due to rate-limiting
+	if strRes == "rate-limit\n" {
+		return nil, ErrRateLimit
 	}
 
 	// convert string response to struct
