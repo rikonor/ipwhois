@@ -22,7 +22,12 @@ import json
 from ipwhois import IPWhois
 from ipwhois.exceptions import HTTPRateLimitError
 
-obj = IPWhois("%s")
+# Change the user agent
+from urllib2 import build_opener
+opener = build_opener()
+opener.addheaders = [('User-Agent', '%s')]
+
+obj = IPWhois("%s", proxy_opener=opener)
 try:
 	results = obj.lookup_rdap(depth=1, retry_count=0)
 	print json.dumps(results)
@@ -63,6 +68,9 @@ var (
 	// PreqreqsMet means that the prerequisites for running this package have been met
 	// meaning python and py-ipwhois are installed
 	PreqreqsMet = false
+
+	// UserAgent is the user agent the request to rdap whois will be made with
+	UserAgent = "ipwhois"
 )
 
 func init() {
@@ -81,7 +89,7 @@ func LookupIP(ip string) (*Response, error) {
 	}
 
 	// call python's ipwhois
-	s := fmt.Sprintf(pyWhoisQuery, ip)
+	s := fmt.Sprintf(pyWhoisQuery, UserAgent, ip)
 	strRes, err := execPythonScript(s)
 	if err != nil {
 		return nil, fmt.Errorf("call to py-whois failed: %s", err)
