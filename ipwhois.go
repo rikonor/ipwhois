@@ -69,8 +69,8 @@ var (
 	// meaning python and py-ipwhois are installed
 	PreqreqsMet = false
 
-	// UserAgent is the user agent the request to rdap whois will be made with
-	UserAgent = "ipwhois"
+	// defaultUserAgent is the default user-agent the request to rdap whois will be made with
+	defaultUserAgent = "ipwhois"
 )
 
 func init() {
@@ -84,12 +84,18 @@ func init() {
 // LookupIP performs an ip whois lookup on the given ip and returns a similar result
 // for all RIRs as specified by the py-ipwhois package
 func LookupIP(ip string) (*Response, error) {
+	return LookupIPWithUA(ip, defaultUserAgent)
+}
+
+// LookupIPWithUA is similar to LookupIP but allows you to specify the User-Agent
+// the request to the RDAP whois server will be made with
+func LookupIPWithUA(ip string, ua string) (*Response, error) {
 	if !PreqreqsMet {
 		panic("calling `LookupIP` requires you have `python` and the `ipwhois` python package installed")
 	}
 
 	// call python's ipwhois
-	s := fmt.Sprintf(pyWhoisQuery, UserAgent, ip)
+	s := fmt.Sprintf(pyWhoisQuery, ua, ip)
 	strRes, err := execPythonScript(s)
 	if err != nil {
 		return nil, fmt.Errorf("call to py-whois failed: %s", err)

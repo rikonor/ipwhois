@@ -25,7 +25,7 @@ func main() {
 }
 ```
 
-The User-Agent requests are made with can be overridden via `ipwhois.UserAgent`.
+The User-Agent requests are made with can be overridden via `ipwhois.LookupIPWithUA`.
 
 ### License
 
