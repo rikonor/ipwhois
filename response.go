@@ -24,7 +24,7 @@ type Network struct {
 	StartAddress string   `json:"start_address"`
 	EndAddress   string   `json:"end_address"`
 	Notices      []Notice `json:"notices"`
-	Remarks      []string `json:"remarks"`
+	Remarks      []Remark `json:"remarks"`
 	ParentHandle string   `json:"parent_handle"`
 	CIDR         string   `json:"cidr"`
 	Type         string   `json:"type"`
@@ -53,7 +53,7 @@ type Object struct {
 	Notices     []Notice `json:"notices"`
 	Contact     Contact  `json:"contact"`
 	EventsActor string   `json:"events_actor"`
-	Remarks     []string `json:"remarks"`
+	Remarks     []Remark `json:"remarks"`
 	Events      []Event  `json:"events"`
 	Raw         string   `json:"raw"`
 }
@@ -107,4 +107,10 @@ type NIRContact struct {
 	Division     string `json:"division"`
 	Organization string `json:"organization"`
 	Updated      string `json:"updated"`
+}
+
+type Remark struct {
+	Description string   `json:"description"`
+	Links       []string `json:"links"`
+	Title       string   `json:"title"`
 }

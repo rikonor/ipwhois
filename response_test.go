@@ -39,7 +39,13 @@ func TestResponse(t *testing.T) {
       }
     ],
     "end_address": "8.8.8.255",
-    "remarks": null,
+    "remarks": [
+      {
+        "description": "APNIC Debogon Project\nAPNIC Pty Ltd",
+        "links": null,
+        "title": "description"
+      }
+    ],
     "parent_handle": "NET-8-0-0-0-1",
     "cidr": "8.8.8.0/24",
     "type": "allocated",
@@ -196,6 +202,12 @@ func TestResponse(t *testing.T) {
 				Event{
 					Action:    "last changed",
 					Timestamp: "2014-03-14T16:52:05-04:00",
+				},
+			},
+			Remarks: []Remark{
+				Remark{
+					Title:       "description",
+					Description: "APNIC Debogon Project\nAPNIC Pty Ltd",
 				},
 			},
 		},
